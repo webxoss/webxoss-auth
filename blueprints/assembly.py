@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+from accounts import accounts
+
 def assembly(app):
-	pass
-    # app.register_blueprint(solomon, url_prefix='/solomon')
+    app.register_blueprint(accounts, url_prefix='/accounts')

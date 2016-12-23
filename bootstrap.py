@@ -2,6 +2,7 @@
 
 import sys
 import os
+from mongoengine import connect
 
 class Bootstrap(object):
 
@@ -10,6 +11,7 @@ class Bootstrap(object):
         cls.__using_utf8()
         cls.__include_path()
         cls.__init_config_loader()
+        cls.__init_mongoengine()
         app = cls.__create_app()
         cls.__routing(app)
         return app
@@ -28,16 +30,22 @@ class Bootstrap(object):
         path = '/'.join(os.path.abspath(__file__).split('/')[:-1])
         sys.path += [path + x for x in [
             '/',
-            '/blueprints'
+            '/blueprints',
+            '/libs',
         ]]
 
     @classmethod
     def __init_config_loader(cls):
         """
         初始化config loader
-        蒋/config下的yaml文件绑定到Config上
+        蒋/config下的yaml文件绑定到config上
         """
-        pass
+        from config_loader import config
+        config.setup('configs/', 'prod')
+
+    @classmethod
+    def __init_mongoengine(cls):
+        connect('webauth', host='127.0.0.1', port=27017)
 
     @classmethod
     def __create_app(cls):

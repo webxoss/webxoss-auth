@@ -36,3 +36,10 @@ class User(Document):
     def get_by_id(cls, user_id):
         user = User.objects(id=user_id).first()
         return user
+
+    @classmethod
+    def get_by_token(cls, token): # 需要判断token是否过期
+        user = User.objects(token=token).first()
+        if user and datetime.now() > user.access_time:
+            user = None
+        return user

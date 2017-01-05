@@ -5,7 +5,7 @@ from flask import request, jsonify
 
 from models import User, Config
 
-class UserinfoController(object):
+class UserConfigController(object):
 
     @classmethod
     def get_user_config(cls):
@@ -48,15 +48,3 @@ class UserinfoController(object):
             'result': 0
         }
         return jsonify(result)
-
-    @classmethod
-    def get_user_deck_list(cls):
-        pass
-
-    @classmethod
-    def get_user_decks(cls):
-        pass
-
-    @classmethod
-    def update_user_deck(cls):
-        pass

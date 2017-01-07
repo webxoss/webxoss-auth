@@ -2,21 +2,15 @@
 
 import json
 from flask import request, jsonify
+from decorator import check_user_login # from libs
 
 from models import User, Config
 
 class UserConfigController(object):
 
     @classmethod
-    def get_user_config(cls):
-        token = request.args.get('token', '')
-        user = User.get_by_token(token)
-        if not user:
-            return jsonify({
-                'result': -1,
-                'msg': 'Wrong Token'
-            })
-
+    @check_user_login
+    def get_user_config(user, cls):
         config_content = Config.get_by_user_id(str(user.id))
         result = {
             'result': 0,
@@ -25,15 +19,9 @@ class UserConfigController(object):
         return jsonify(result)
 
     @classmethod
-    def update_user_config(cls):
-        token = request.args.get('token', '')
+    @check_user_login
+    def update_user_config(user, cls):
         config_str = request.args.get('config', '')
-        user = User.get_by_token(token)
-        if not user:
-            return jsonify({
-                'result': -1,
-                'msg': 'Wrong Token'
-            })
 
         try:
             config_object = json.loads(config_str)

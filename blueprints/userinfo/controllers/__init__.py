@@ -1,2 +1,2 @@
 from user_config_controller import UserConfigController
-from decks_controller import DeckController
+from deck_controller import DeckController

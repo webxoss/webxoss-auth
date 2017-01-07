@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from mongoengine import ObjectIdField, StringField, IntField
+from mongoengine import Document, ObjectIdField, StringField, IntField
 
 class Deck(Document):
     user_id = ObjectIdField(required=True, verbose_name=u'关联用户的数据库编号')

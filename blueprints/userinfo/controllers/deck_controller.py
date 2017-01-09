@@ -36,17 +36,16 @@ class DeckController(object):
     @classmethod
     @check_user_login
     def update_user_deck(user, cls):
-        deck_name = request.args.get('name', '')
-        main_deck_str = request.args.get('main_deck', '')
-        lrig_deck_str = request.args.get('lrig_deck', '')
+        deck_name = request.args.get('name', None)
+        deck_content_str = request.args.get('content', '')
 
-        if not Deck.check_verify_deck(main_deck_str) or not Deck.check_verify_deck(lrig_deck_str):
+        if deck_name == None or not Deck.check_verify_deck(deck_content_str):
             return jsonify({
                 'result': -2,
                 'msg': 'Not Object'
             })
 
-        Deck.upload_deck(str(user.id), deck_name, main_deck_str, lrig_deck_str)
+        Deck.upload_deck(str(user.id), deck_name, deck_content_str)
 
         return jsonify({
             'result': 0,

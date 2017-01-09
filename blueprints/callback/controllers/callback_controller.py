@@ -19,7 +19,7 @@ class CallbackController(object):
     @classmethod
     def callback_weibo(cls):
         code = request.args.get('code', None)
-        state = request.args.get('state', None) # 用于给webxoss验证用参数
+        state = request.args.get('state', '') # 用于给webxoss验证用参数
         if code == None:
             return jsonify({
                 'result': -1,
